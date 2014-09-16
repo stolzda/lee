@@ -2,7 +2,7 @@ Aufgaben
 ===
 #16.09.2014
 
-1. (Repetition) Dokument durchlesen: [Eclipse / Projekt Intro](doc/eclipse_intro.pdf)
+1. (Repetition) Dokument durchlesen: [Eclipse / Projekt Intro](doc/eclipse_intro.pdf) (auf "view raw" klicken um das PDF runter zu laden).
 2. Projekt Setup verifizieren.
   1. Beide verwenden das gleiche Repository.
   2. Beide haben Schreibrechte (d.h., können ihre commits pushen).
