@@ -1,36 +1,30 @@
 package ch.ksimlee.it.spaceinvaders;
 
-import ch.ksimlee.it.spaceinvaders.log.Log;
-import ch.ksimlee.it.spaceinvaders.log.Log.Level;
+import java.awt.EventQueue;
 
 public class Main {
 
 	public static void main(String[] args) {
-		
-		for (int i = 0; i < 4; i++) {
-			
-			// Set the Log Level.
-			Level level = Log.Level.values()[i];
-			System.out.println("Setting log level for testing to: " + level);
-			Log.setLevel(level);
-			
-			// Execute the test function with the current settings of
-			// the logger.
-			myFunction(10);
-		}
-		
-	}
-	
-	public static void myFunction(int x) {
-		
-		Log.debug("Entering function myFunction");
-		
-		int y = x * x;
-		Log.info("Result: " + y);
-		
-		Log.warning("This logs a warning");
-		
-		Log.error("This logs an error");
-	}
+
+		/*
+		 * Run the command to create the window (the JFrame) in the separate
+		 * drawing thread. In swing, all commands that draw something should be
+		 * run within this drawing thread, even though this is not enforced.
+		 * Commands can be put to be executed in this thread by calling
+		 * "EventQueue.invokeLater(...)" .
+		 */
+		EventQueue.invokeLater(new Runnable() {
+
+			// This function specifies the commands which the drawing thread
+			// should execute.
+			@Override
+			public void run() {
+
+				// Create the window (the JFrame).
+				Window window = new Window();
+				window.setVisible(true);
+			}
+  });
+    }
 
 }

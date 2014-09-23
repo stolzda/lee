@@ -11,7 +11,7 @@ public class Log {
 	}
 	
 	/** The level of the logger. Determines which messages are actually logged. */
-	private static Level CURRENT_LEVEL = Level.DEBUG;
+	private static Level CURRENT_LEVEL = Level.INFO;
 	
 	/**
 	 * Set the level of this logger.
