@@ -20,6 +20,21 @@ public class Canvas extends JPanel {
 	// This variable stores with how many frames per second (FPS) the canvas
 	// should be redrawn.
 	private static final int FPS = 25;
+	
+	/** Should the FPS be shown? */
+	private boolean showFPS = true;
+	
+	/** The actual FPS from the last secocnd. */
+	private int lastFPS = 0;
+	
+	/** The number of frames that have been rendered in this second (wall-clock). */
+	private int framesRenderedThisSecond = 0;
+	
+	/**
+	 * The second that is currently considered to be active, i.e., we add frames
+	 * to the counter as long as this second does not change.
+	 */
+	private long activeSecond = -1;
 
 	public Canvas() {
 		setPreferredSize(SIZE);
@@ -68,7 +83,44 @@ public class Canvas extends JPanel {
 		g.fillRect(0, 0, SIZE.width, SIZE.height);
 
 		// TODO: Add more drawing commands here.
+		
+		// Calculate the actual FPS.
+		updateFps();
 
+		if (showFPS) {
+			g.setColor(Color.black);
+			g.drawString("FPS: " + lastFPS, SIZE.width - 60, 20);
+		}
+		
+	}
+	
+	/**
+	 * This function counts the actually rendered FPS.
+	 */
+	private void updateFps() {
+		
+		// Get the current time in seconds since 1.1.1970.
+		long now = System.currentTimeMillis() / 1000;
+		
+		if (now > activeSecond) {
+			// The second switched.
+			
+			// Store the FPS that we counted.
+			lastFPS = framesRenderedThisSecond;
+			
+			// Reset the counter.
+			framesRenderedThisSecond = 0;
+			
+			// Update the second.
+			activeSecond = now;
+			
+		} else {
+			// We are still in the same second (wall-clock).
+			
+			// Increase the counter by one.
+			framesRenderedThisSecond++;
+		}
+		
 	}
 
 }
