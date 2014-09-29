@@ -5,11 +5,14 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import ch.ksimlee.it.spaceinvaders.log.Log;
+import ch.ksimlee.it.spaceinvaders.objects.RenderObject;
 
 @SuppressWarnings("serial")
 public class Canvas extends JPanel {
@@ -35,10 +38,15 @@ public class Canvas extends JPanel {
 	 * to the counter as long as this second does not change.
 	 */
 	private long activeSecond = -1;
-
-	public Canvas() {
+	
+	/** The game object. */
+	private final Game game;
+	
+	public Canvas(Game game) {
 		setPreferredSize(SIZE);
-
+		
+		this.game = game;
+		
 		Log.info("Initialized canvas.");
 
 		/*
@@ -82,7 +90,10 @@ public class Canvas extends JPanel {
 		// "background".
 		g.fillRect(0, 0, SIZE.width, SIZE.height);
 
-		// TODO: Add more drawing commands here.
+		// Render all objects.
+		for (RenderObject object : game.getObjectsToRender()) {
+			object.render(g);
+		}
 		
 		// Calculate the actual FPS.
 		updateFps();

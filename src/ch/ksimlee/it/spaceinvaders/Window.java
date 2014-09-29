@@ -23,7 +23,7 @@ public class Window extends JFrame {
 	 * NOTE: Constructors do not have a return type, since they "implicitly"
 	 * return the object that was created.
 	 */
-	public Window() {
+	public Window(Game game) {
 
 		// Set the title of the JFrame (swing function).
 		setTitle(GAME_TITLE);
@@ -37,7 +37,7 @@ public class Window extends JFrame {
 		setLayout(new BorderLayout());
 
 		// Create the canvas on which we are going to draw the game.
-		Canvas canvas = new Canvas();
+		Canvas canvas = new Canvas(game);
 		canvas.setVisible(true);
 
 		// Add the canvas to this JFrame (swing function).

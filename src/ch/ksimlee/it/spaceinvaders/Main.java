@@ -19,10 +19,16 @@ public class Main {
 			// should execute.
 			@Override
 			public void run() {
+				
+				// Create the Game object.
+				Game game = new Game();
 
 				// Create the window (the JFrame).
-				Window window = new Window();
+				Window window = new Window(game);
 				window.setVisible(true);
+				
+				// Start the game!
+				new Thread(game).start();
 			}
   });
     }
