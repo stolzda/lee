@@ -23,7 +23,7 @@ public class Canvas extends JPanel {
 
 	// This variable stores with how many frames per second (FPS) the canvas
 	// should be redrawn.
-	private static final int FPS = 20;
+	private static final int FPS = 30;
 	
 	/** Should the FPS be shown? */
 	private boolean showFPS = true;

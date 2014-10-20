@@ -3,6 +3,7 @@ package ch.ksimlee.it.spaceinvaders.objects;
 import java.awt.Graphics;
 
 import ch.ksimlee.it.spaceinvaders.Canvas;
+import ch.ksimlee.it.spaceinvaders.InputHandler;
 
 /**
  * This class can be extended by classes that can render themselves on the
@@ -38,7 +39,30 @@ public abstract class RenderObject implements Comparable<RenderObject> {
 		this.y = y;
 		this.zIndex = zIndex;
 	}
-
+	
+	/**
+	 * Update this object based on the current user input.
+	 * 
+	 * @param currentInput
+	 *            The current user input.
+	 */
+	public void update(InputHandler currentInput) {
+		// Default: Do nothing
+	}
+	
+	/**
+	 * Move this object.
+	 * 
+	 * @param dx
+	 *            Delta x to move.
+	 * @param dy
+	 *            Delta y to move.
+	 */
+	public void move(int dx, int dy) {
+		this.x += dx;
+		this.y += dy;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {

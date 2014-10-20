@@ -9,10 +9,13 @@ import ch.ksimlee.it.spaceinvaders.objects.Spaceship;
 
 public class Game implements Runnable {
 	
-	private static final int ACTIONS_PER_SECOND = 10;
+	private static final int ACTIONS_PER_SECOND = 30;
 	
 	/** A list of all objects that can be rendered. */
 	private final Set<RenderObject> objectsToRender = new HashSet<RenderObject>();
+	
+	/** The handler that should receive the user input. */
+	private final InputHandler inputHandler = new InputHandler();
 	
 	private final Spaceship spaceship;
 	
@@ -39,10 +42,10 @@ public class Game implements Runnable {
 			// TODO: Add game mechanics here.
 			
 			// XXX: Example
-			spaceship.setX(spaceship.getX() + 5);
-			if (spaceship.getX() >  400) {
-				spaceship.setX(200);
-			}
+			spaceship.update(inputHandler);
+			
+			// Update the input state.
+			inputHandler.updatedReleasedKeys();
 			
 			// Delay the next action (iteration of the loop).
 			try {
@@ -64,4 +67,7 @@ public class Game implements Runnable {
 		return objectsToRender;
 	}
 
+	public InputHandler getInputHandler() {
+		return inputHandler;
+	}
 }
