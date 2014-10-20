@@ -39,6 +39,14 @@ public abstract class RenderObject implements Comparable<RenderObject> {
 		this.zIndex = zIndex;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Render this object on the Canvas' graphic area.
 	 * 

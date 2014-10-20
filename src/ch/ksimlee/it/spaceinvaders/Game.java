@@ -1,7 +1,7 @@
 package ch.ksimlee.it.spaceinvaders;
 
-import java.util.SortedSet;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.HashSet;
+import java.util.Set;
 
 import ch.ksimlee.it.spaceinvaders.log.Log;
 import ch.ksimlee.it.spaceinvaders.objects.RenderObject;
@@ -12,7 +12,7 @@ public class Game implements Runnable {
 	private static final int ACTIONS_PER_SECOND = 10;
 	
 	/** A list of all objects that can be rendered. */
-	private final SortedSet<RenderObject> objectsToRender = new ConcurrentSkipListSet<RenderObject>();
+	private final Set<RenderObject> objectsToRender = new HashSet<RenderObject>();
 	
 	private final Spaceship spaceship;
 	
@@ -60,7 +60,7 @@ public class Game implements Runnable {
 		
 	}
 	
-	public SortedSet<RenderObject> getObjectsToRender() {
+	public Set<RenderObject> getObjectsToRender() {
 		return objectsToRender;
 	}
 

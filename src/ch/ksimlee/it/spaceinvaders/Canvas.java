@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -22,7 +23,7 @@ public class Canvas extends JPanel {
 
 	// This variable stores with how many frames per second (FPS) the canvas
 	// should be redrawn.
-	private static final int FPS = 25;
+	private static final int FPS = 20;
 	
 	/** Should the FPS be shown? */
 	private boolean showFPS = true;
@@ -90,8 +91,12 @@ public class Canvas extends JPanel {
 		// "background".
 		g.fillRect(0, 0, SIZE.width, SIZE.height);
 
+		// Get all objects, and sort them according to ther zIndex.
+		List<RenderObject> gameObjects = new ArrayList<RenderObject>(game.getObjectsToRender());
+		Collections.sort(gameObjects);
+		
 		// Render all objects.
-		for (RenderObject object : game.getObjectsToRender()) {
+		for (RenderObject object : gameObjects) {
 			object.render(g);
 		}
 		
