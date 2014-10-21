@@ -13,12 +13,12 @@ import ch.ksimlee.it.spaceinvaders.log.Log;
 public class InputHandler {
 	
 	/** A set containing all keys that are pressed. */
-	private final Set<Integer> keyPressed = new HashSet<>();
+	private final Set<Integer> keyPressed = new HashSet<Integer>();
 	
 	/** A set that contains the keys that are released and that
 	 * should be removed from the keyPressed set in the near future.
 	 */
-	private final Set<Integer> keyReleased = new HashSet<>();
+	private final Set<Integer> keyReleased = new HashSet<Integer>();
 	
 	/**
 	 * Handle what should be done upon a certain key event.
