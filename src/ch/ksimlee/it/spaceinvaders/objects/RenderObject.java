@@ -2,10 +2,14 @@ package ch.ksimlee.it.spaceinvaders.objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.HashSet;
 import java.util.Set;
+
+import com.sun.org.apache.bcel.internal.generic.CPInstruction;
 
 import ch.ksimlee.it.spaceinvaders.Canvas;
 import ch.ksimlee.it.spaceinvaders.InputHandler;
+import ch.ksimlee.it.spaceinvaders.log.Log;
 
 /**
  * This class can be extended by classes that can render themselves on the
@@ -72,10 +76,113 @@ public abstract class RenderObject implements Comparable<RenderObject> {
 	 *            Delta y to move.
 	 * @param allObjects
 	 *            All objects that currently exist.
+	 * 
+	 * @return True, iff there was a collision.
 	 */
-	public void move(int dx, int dy, Set<RenderObject> allObjects) {
-		this.x += dx;
-		this.y += dy;
+	public boolean move(int dx, int dy, Set<RenderObject> allObjects) {
+		
+		// Did we encounter a collision during the movement?
+		boolean collision = false;
+		
+		if (hasCollision) {
+			// We need to check for collision.
+			
+			// Create a set for all possible collision targets.
+			Set<RenderObject> collisionTargets = new HashSet<>();
+			
+			// Add all _other_ objects that have collision.
+			for (RenderObject object : allObjects) {
+				
+				if (object != this && object.hasCollision) {
+					collisionTargets.add(object);
+				}
+			}
+			
+			// Simple algorithm:
+			
+			// 1. Calculate the number of movement steps.
+			int steps = Math.max(Math.abs(dx), Math.abs(dy));
+			
+			// Calculate the speed in the two dimensions.
+			// This can be fractions, thus we need to use floats.
+			float speedX = ((float) dx) / steps;
+			float speedY = ((float) dy) / steps;
+			
+			// As we are working with floats for the speed, we need
+			// to use floats for the position too.
+			float positionX = this.x;
+			float positionY = this.y;
+			
+			// 2. Move "step by step" into the desired direction.
+			for (int step = 0; step < steps; step++) {
+				
+				// Perform the next step.
+				positionX += speedX;
+				positionY += speedY;
+				
+				// Update the position of this object.
+				this.x = Math.round(positionX);
+				this.y = Math.round(positionY);
+				
+				// Check if there is a collision now.
+				for (RenderObject object : collisionTargets) {
+					
+					if (overlapsWithObject(object)) {
+						// There is a collision!
+						collision = true;
+						
+						// Exit the loop of checking for collisions directly.
+						break;
+					}
+				}
+				
+				if (collision) {
+					// There was a collision!
+					
+					// Move one step back, to the last position, because
+					// there was no collision there.
+					positionX -= speedX;
+					positionY -= speedY;
+					
+					// Set the positions to this last position.
+					this.x = Math.round(positionX);
+					this.y = Math.round(positionY);
+					
+					// Exit the moving loop, since we have a collision and we
+					// cannot move further.
+					break;
+				}
+				
+			}
+			
+			
+		} else {
+			// This object has no collision, just update the coordinates.
+
+			this.x += dx;
+			this.y += dy;
+		}
+		
+		if (collision) {
+			Log.info("There was a collision!");
+		}
+		
+		return collision;
+	}
+	
+	/**
+	 * Check if the bounding box of this rectangle overlaps with the bounding
+	 * box of another object.
+	 * 
+	 * @param other
+	 *            The other object.
+	 * @return True, iff the objects overlap.
+	 */
+	private boolean overlapsWithObject(RenderObject other) {
+		return (x < other.x + other.getWidth() &&
+		        x + getWidth() > other.x &&
+		        y < other.y + other.getHeight() &&
+		        y + getHeight()  > other.y);
 	}
 	
 	@Override
