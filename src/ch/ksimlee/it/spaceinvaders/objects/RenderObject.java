@@ -1,5 +1,6 @@
 package ch.ksimlee.it.spaceinvaders.objects;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import ch.ksimlee.it.spaceinvaders.Canvas;
@@ -70,7 +71,11 @@ public abstract class RenderObject implements Comparable<RenderObject> {
 		}
 		return false;
 	}
-
+	
+	public abstract int getWidth();
+	
+	public abstract int getHeight();
+	
 	/**
 	 * Render this object on the Canvas' graphic area.
 	 * 

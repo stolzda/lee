@@ -60,4 +60,14 @@ public class ImageObject extends RenderObject {
 		g.drawImage(image, x, y, null);
 	}
 
+	@Override
+	public int getWidth() {
+		return image.getWidth();
+	}
+
+	@Override
+	public int getHeight() {
+		return image.getHeight();
+	}
+
 }
