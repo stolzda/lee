@@ -41,8 +41,10 @@ public class Game implements Runnable {
 			
 			// TODO: Add game mechanics here.
 			
-			// XXX: Example
-			spaceship.update(inputHandler);
+			// Update all game objects.
+			for (RenderObject object : objectsToRender) {
+				object.update(inputHandler);
+			}
 			
 			// Update the input state.
 			inputHandler.updatedReleasedKeys();
