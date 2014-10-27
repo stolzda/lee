@@ -43,7 +43,7 @@ public class Game implements Runnable {
 			
 			// Update all game objects.
 			for (RenderObject object : objectsToRender) {
-				object.update(inputHandler);
+				object.update(inputHandler, objectsToRender);
 			}
 			
 			// Update the input state.

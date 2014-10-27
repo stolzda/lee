@@ -2,6 +2,7 @@ package ch.ksimlee.it.spaceinvaders.objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Set;
 
 import ch.ksimlee.it.spaceinvaders.Canvas;
 import ch.ksimlee.it.spaceinvaders.InputHandler;
@@ -21,6 +22,9 @@ public abstract class RenderObject implements Comparable<RenderObject> {
 	/** The Y coordinate of this render object. */
 	protected int y;
 	
+	/** Can other objects collide with this object? */
+	protected boolean hasCollision = false;
+	
 	/**
 	 * The zIndex is responsible for how much in front the object is drawn. The
 	 * higher this index is, the more on top of the image will the object be
@@ -37,11 +41,14 @@ public abstract class RenderObject implements Comparable<RenderObject> {
 	 *            The initial Y coordinate.
 	 * @param zIndex
 	 *            The initial zIndex of the object.
+	 * @param collision
+	 *            Can other objects collide with this object?
 	 */
-	public RenderObject(int x, int y, int zIndex) {
+	public RenderObject(int x, int y, int zIndex, boolean collision) {
 		this.x = x;
 		this.y = y;
 		this.zIndex = zIndex;
+		this.hasCollision = collision;
 	}
 	
 	/**
@@ -49,8 +56,10 @@ public abstract class RenderObject implements Comparable<RenderObject> {
 	 * 
 	 * @param currentInput
 	 *            The current user input.
+	 * @param allObjects
+	 *            All objects that currently exist.
 	 */
-	public void update(InputHandler currentInput) {
+	public void update(InputHandler currentInput, Set<RenderObject> allObjects) {
 		// Default: Do nothing
 	}
 	
@@ -61,8 +70,10 @@ public abstract class RenderObject implements Comparable<RenderObject> {
 	 *            Delta x to move.
 	 * @param dy
 	 *            Delta y to move.
+	 * @param allObjects
+	 *            All objects that currently exist.
 	 */
-	public void move(int dx, int dy) {
+	public void move(int dx, int dy, Set<RenderObject> allObjects) {
 		this.x += dx;
 		this.y += dy;
 	}

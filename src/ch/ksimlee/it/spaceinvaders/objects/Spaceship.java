@@ -1,6 +1,7 @@
 package ch.ksimlee.it.spaceinvaders.objects;
 
 import java.awt.event.KeyEvent;
+import java.util.Set;
 
 import ch.ksimlee.it.spaceinvaders.InputHandler;
 
@@ -17,24 +18,24 @@ public class Spaceship extends ImageObject {
 	private int speed = 10;
 
 	public Spaceship(int x, int y) {
-		super(x, y, zIndex, FILENAME);
+		super(x, y, zIndex, true, FILENAME);
 	}
 
 	@Override
-	public void update(InputHandler currentInput) {
+	public void update(InputHandler currentInput, Set<RenderObject> allObjects) {
 		
 		// Check if we need to move left.
 		if (currentInput.isKeyPressed(KeyEvent.VK_A) ||
 				currentInput.isKeyPressed(KeyEvent.VK_LEFT)) {
 			
-			move(-speed, 0);
+			move(-speed, 0, allObjects);
 		}
 		
 		// Check if we need to move right.
 		if (currentInput.isKeyPressed(KeyEvent.VK_D) ||
 				currentInput.isKeyPressed(KeyEvent.VK_RIGHT)) {
 			
-			move(speed, 0);
+			move(speed, 0, allObjects);
 		}
 	}
 
