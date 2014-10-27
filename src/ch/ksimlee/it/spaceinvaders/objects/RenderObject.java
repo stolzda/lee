@@ -12,6 +12,9 @@ import ch.ksimlee.it.spaceinvaders.InputHandler;
  */
 public abstract class RenderObject implements Comparable<RenderObject> {
 	
+	/** Should the bounding boxes of objects be drawn? */
+	public static boolean SHOW_BOUNDING_BOX = true;
+	
 	/** The X coordinate of this render object. */
 	protected int x;
 	
@@ -75,6 +78,32 @@ public abstract class RenderObject implements Comparable<RenderObject> {
 	public abstract int getWidth();
 	
 	public abstract int getHeight();
+	
+	/**
+	 * Internal function to render objects.
+	 * 
+	 * @param g
+	 *            The graphics context to render on.
+	 */
+	public final void renderInternal(Graphics g) {
+
+		// Perform the actual rendering.
+		render(g);
+
+		// Perform the debug rendering.
+		
+		if (SHOW_BOUNDING_BOX) {
+
+			// Store the current color.
+			Color color = g.getColor();
+
+			g.setColor(Color.magenta);
+			g.drawRect(x, y, getWidth(), getHeight());
+
+			// Restore the color.
+			g.setColor(color);
+		}
+	}
 	
 	/**
 	 * Render this object on the Canvas' graphic area.
