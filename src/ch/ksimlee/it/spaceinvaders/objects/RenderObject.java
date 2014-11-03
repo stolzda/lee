@@ -88,7 +88,7 @@ public abstract class RenderObject implements Comparable<RenderObject> {
 			// We need to check for collision.
 			
 			// Create a set for all possible collision targets.
-			Set<RenderObject> collisionTargets = new HashSet<>();
+			Set<RenderObject> collisionTargets = new HashSet<RenderObject>();
 			
 			// Add all _other_ objects that have collision.
 			for (RenderObject object : allObjects) {
