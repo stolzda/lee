@@ -5,10 +5,8 @@ import java.awt.Graphics;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.sun.org.apache.bcel.internal.generic.CPInstruction;
-
 import ch.ksimlee.it.spaceinvaders.Canvas;
-import ch.ksimlee.it.spaceinvaders.InputHandler;
+import ch.ksimlee.it.spaceinvaders.Game;
 import ch.ksimlee.it.spaceinvaders.log.Log;
 
 /**
@@ -58,12 +56,9 @@ public abstract class RenderObject implements Comparable<RenderObject> {
 	/**
 	 * Update this object based on the current user input.
 	 * 
-	 * @param currentInput
-	 *            The current user input.
-	 * @param allObjects
-	 *            All objects that currently exist.
+	 * @param game The current game in which this object is.
 	 */
-	public void update(InputHandler currentInput, Set<RenderObject> allObjects) {
+	public void update(Game game) {
 		// Default: Do nothing
 	}
 	
@@ -79,10 +74,9 @@ public abstract class RenderObject implements Comparable<RenderObject> {
 	 * 
 	 * @return True, iff there was a collision.
 	 */
-	public boolean move(int dx, int dy, Set<RenderObject> allObjects) {
+	public RenderObject move(int dx, int dy, Set<RenderObject> allObjects) {
 		
-		// Did we encounter a collision during the movement?
-		boolean collision = false;
+		RenderObject collision = null;
 		
 		if (hasCollision) {
 			// We need to check for collision.
@@ -129,14 +123,14 @@ public abstract class RenderObject implements Comparable<RenderObject> {
 					
 					if (overlapsWithObject(object)) {
 						// There is a collision!
-						collision = true;
+						collision = object;
 						
 						// Exit the loop of checking for collisions directly.
 						break;
 					}
 				}
 				
-				if (collision) {
+				if (collision != null) {
 					// There was a collision!
 					
 					// Move one step back, to the last position, because
@@ -163,7 +157,7 @@ public abstract class RenderObject implements Comparable<RenderObject> {
 			this.y += dy;
 		}
 		
-		if (collision) {
+		if (collision != null) {
 			Log.info("There was a collision!");
 		}
 		
@@ -191,6 +185,14 @@ public abstract class RenderObject implements Comparable<RenderObject> {
 			return true;
 		}
 		return false;
+	}
+	
+	public int getCenterX() {
+		return x + getWidth() / 2;
+	}
+	
+	public int getCenterY() {
+		return y + getHeight() / 2;
 	}
 	
 	public abstract int getWidth();

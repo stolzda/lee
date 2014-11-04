@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import ch.ksimlee.it.spaceinvaders.log.Log;
+import ch.ksimlee.it.spaceinvaders.objects.Alien;
 import ch.ksimlee.it.spaceinvaders.objects.RenderObject;
 import ch.ksimlee.it.spaceinvaders.objects.Spaceship;
 
@@ -13,6 +14,19 @@ public class Game implements Runnable {
 	
 	/** A list of all objects that can be rendered. */
 	private final Set<RenderObject> objectsToRender = new HashSet<RenderObject>();
+	
+	private final Set<RenderObject> objectsToAdd = new HashSet<RenderObject>();
+
+	public Set<RenderObject> getObjectsToAdd() {
+		return objectsToAdd;
+	}
+
+	public Set<RenderObject> getObjectsToRemove() {
+		return objectsToRemove;
+	}
+
+	private final Set<RenderObject> objectsToRemove = new HashSet<RenderObject>();
+
 	
 	/** The handler that should receive the user input. */
 	private final InputHandler inputHandler = new InputHandler();
@@ -29,6 +43,12 @@ public class Game implements Runnable {
 		// Add the spaceship to the list of renderable objects.
 		objectsToRender.add(spaceship);
 		
+		for (int i = 0; i < 500; i += 100) {
+			objectsToRender.add(new Alien(i, 100));
+		}
+		
+	
+		
 		Log.info("Game initialized.");
 	}
 
@@ -43,8 +63,14 @@ public class Game implements Runnable {
 			
 			// Update all game objects.
 			for (RenderObject object : objectsToRender) {
-				object.update(inputHandler, objectsToRender);
+				object.update(this);
 			}
+			
+			objectsToRender.removeAll(objectsToRemove);
+			objectsToRender.addAll(objectsToAdd);
+			
+			objectsToAdd.clear();
+			objectsToRemove.clear();
 			
 			// Update the input state.
 			inputHandler.updatedReleasedKeys();
