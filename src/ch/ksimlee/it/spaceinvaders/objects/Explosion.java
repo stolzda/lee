@@ -1,6 +1,7 @@
 package ch.ksimlee.it.spaceinvaders.objects;
 
 import ch.ksimlee.it.spaceinvaders.Game;
+import ch.ksimlee.it.spaceinvaders.Sound;
 
 public class Explosion extends ImageObject {
 	
@@ -22,6 +23,8 @@ public class Explosion extends ImageObject {
 		
 		x = object.getCenterX() - getHeight()/2;
 		y = object.getCenterY() - getWidth()/2;
+		
+		new Sound(Sound.EXPLOSION).play();
 	}
 
 	@Override

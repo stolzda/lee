@@ -1,6 +1,12 @@
 package ch.ksimlee.it.spaceinvaders.objects;
 
+import java.io.IOException;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import ch.ksimlee.it.spaceinvaders.Game;
+import ch.ksimlee.it.spaceinvaders.Sound;
 
 public class Shot extends ImageObject {
 	
@@ -20,6 +26,8 @@ public class Shot extends ImageObject {
 		
 		x = spaceship.getCenterX() - getWidth() / 2;
 		y = spaceship.y - getHeight();
+
+		new Sound(Sound.SHOT).play();
 	}
 
 	@Override
