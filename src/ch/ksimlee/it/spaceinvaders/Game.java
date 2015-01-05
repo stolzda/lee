@@ -1,5 +1,6 @@
 package ch.ksimlee.it.spaceinvaders;
 
+import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,11 +32,19 @@ public class Game implements Runnable {
 	/** The handler that should receive the user input. */
 	private final InputHandler inputHandler = new InputHandler();
 	
-	private final Spaceship spaceship;
+	private Spaceship spaceship;
 	
 	public Game() {
 		
 		Log.info("Starting a game with " + ACTIONS_PER_SECOND + " actions/second.");
+		
+		initialize();
+	}
+
+	/**
+	 * Initialize a new game.
+	 */
+	private void initialize() {
 		
 		// Create the spaceship.
 		spaceship = new Spaceship(200, 200);
@@ -47,9 +56,19 @@ public class Game implements Runnable {
 			objectsToRender.add(new Alien(i, 100));
 		}
 		
-	
-		
 		Log.info("Game initialized.");
+	}
+	
+	/**
+	 * Reset the game, i.e., perform a restart.
+	 */
+	private void reset() {
+
+		// Clear all objects from the game.
+		objectsToRender.clear();
+		
+		// Reinitialize the game.
+		initialize();
 	}
 
 	@Override
@@ -59,7 +78,11 @@ public class Game implements Runnable {
 			// This loop goes forever, since we don't want our game
 			// logic to stop.
 			
-			// TODO: Add game mechanics here.
+			// Check if the game should be resetted.
+			if (inputHandler.isKeyPressed(KeyEvent.VK_R)) {
+				reset();
+			}
+			
 			
 			// Update all game objects.
 			for (RenderObject object : objectsToRender) {
